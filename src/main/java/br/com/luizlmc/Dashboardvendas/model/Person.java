@@ -1,6 +1,7 @@
 package br.com.luizlmc.Dashboardvendas.model;
 
 import br.com.luizlmc.Dashboardvendas.dto.PersonDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,12 @@ public class Person {
 
     @NotNull
     private Boolean active;
+
+    @JsonIgnore
+    @Transient
+    public boolean isInactive() {
+        return !this.active;
+    }
 
     public Person(PersonDTO personDTO) {
         this.id = personDTO.getId();

@@ -2,11 +2,21 @@ package br.com.luizlmc.Dashboardvendas.service;
 
 import br.com.luizlmc.Dashboardvendas.dto.JournalEntryDTO;
 import br.com.luizlmc.Dashboardvendas.dto.mapper.JournalEntryMapper;
+import br.com.luizlmc.Dashboardvendas.event.ResourceCreatedEvent;
+import br.com.luizlmc.Dashboardvendas.model.JournalEntry;
+import br.com.luizlmc.Dashboardvendas.model.Person;
 import br.com.luizlmc.Dashboardvendas.repository.JournalEntryRepository;
+import br.com.luizlmc.Dashboardvendas.repository.PersonRepository;
+import br.com.luizlmc.Dashboardvendas.repository.filter.JournalEntryFilter;
+import br.com.luizlmc.Dashboardvendas.service.exception.NonexistentOrInactivePersonException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,10 +28,36 @@ public class JournalEntryService {
     @Autowired
     private JournalEntryMapper journalEntryMapper;
 
-    public List<JournalEntryDTO> search() {
-        return journalEntryRepository.findAll()
+    @Autowired
+    private PersonRepository personRepository;
+
+    @Autowired
+    private ApplicationEventPublisher publisher;
+
+    public List<JournalEntryDTO> search(JournalEntryFilter journalEntryFilter) {
+        return journalEntryRepository.filter(journalEntryFilter)
                 .stream()
                 .map(journalEntryMapper::toJournalEntryDTO)
                 .collect(Collectors.toList());
+    }
+
+    public Optional<JournalEntryDTO> findById(Long id) {
+        return journalEntryRepository.findById(id)
+                .map(journalEntryMapper::toJournalEntryDTO);
+    }
+
+    public JournalEntryDTO create(JournalEntryDTO journalEntryDTO, HttpServletResponse response) {
+
+        Person personSave = personRepository.findById(journalEntryDTO.getPerson().getId())
+                .orElseThrow(() -> new EmptyResultDataAccessException(1));
+
+        if (personSave == null || personSave.isInactive()){
+            throw new NonexistentOrInactivePersonException();
+        }
+
+        JournalEntry journalEntrySave = journalEntryRepository.save(journalEntryMapper.toJournalEntry(journalEntryDTO));
+
+        publisher.publishEvent(new ResourceCreatedEvent(this, response, journalEntrySave.getId()));
+        return journalEntryMapper.toJournalEntryDTO(journalEntrySave);
     }
 }
