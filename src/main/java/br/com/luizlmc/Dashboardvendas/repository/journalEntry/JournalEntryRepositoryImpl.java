@@ -3,6 +3,9 @@ package br.com.luizlmc.Dashboardvendas.repository.journalEntry;
 import br.com.luizlmc.Dashboardvendas.model.JournalEntry;
 import br.com.luizlmc.Dashboardvendas.model.JournalEntry_;
 import br.com.luizlmc.Dashboardvendas.repository.filter.JournalEntryFilter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.EntityManager;
@@ -21,7 +24,7 @@ public class JournalEntryRepositoryImpl implements JournalEntryRepositoryQuery{
     private EntityManager manager;
 
     @Override
-    public List<JournalEntry> filter(JournalEntryFilter journalEntryFilter) {
+    public Page<JournalEntry> filter(JournalEntryFilter journalEntryFilter,Pageable pageable) {
         CriteriaBuilder builder = manager.getCriteriaBuilder();
         CriteriaQuery<JournalEntry> criteria = builder.createQuery(JournalEntry.class);
         Root<JournalEntry> root = criteria.from(JournalEntry.class);
@@ -31,8 +34,9 @@ public class JournalEntryRepositoryImpl implements JournalEntryRepositoryQuery{
         criteria.where(predicates);
 
         TypedQuery<JournalEntry> query = manager.createQuery(criteria);
+        addPaginationRestrictions(query, pageable);
 
-        return query.getResultList();
+        return new PageImpl<>(query.getResultList(), pageable, total(journalEntryFilter));
     }
 
     private Predicate[] createRestrictions(JournalEntryFilter journalEntryFilter, CriteriaBuilder builder,
@@ -57,4 +61,24 @@ public class JournalEntryRepositoryImpl implements JournalEntryRepositoryQuery{
         return predicates.toArray(new Predicate[predicates.size()]);
     }
 
+    private void addPaginationRestrictions(TypedQuery<?> query, Pageable pageable) {
+        int currentPage = pageable.getPageNumber();
+        int recordsPerPage = pageable.getPageSize();
+        int firstPageRecord = currentPage * recordsPerPage;
+
+        query.setFirstResult(firstPageRecord);
+        query.setMaxResults(recordsPerPage);
+    }
+
+    private Long total(JournalEntryFilter journalEntryFilter) {
+        CriteriaBuilder builder = manager.getCriteriaBuilder();
+        CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
+        Root<JournalEntry> root = criteria.from(JournalEntry.class);
+
+        Predicate[] predicates = createRestrictions(journalEntryFilter, builder, root);
+        criteria.where(predicates);
+
+        criteria.select(builder.count(root));
+        return manager.createQuery(criteria).getSingleResult();
+    }
 }

@@ -12,6 +12,8 @@ import br.com.luizlmc.Dashboardvendas.service.exception.NonexistentOrInactivePer
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
@@ -34,11 +36,9 @@ public class JournalEntryService {
     @Autowired
     private ApplicationEventPublisher publisher;
 
-    public List<JournalEntryDTO> search(JournalEntryFilter journalEntryFilter) {
-        return journalEntryRepository.filter(journalEntryFilter)
-                .stream()
-                .map(journalEntryMapper::toJournalEntryDTO)
-                .collect(Collectors.toList());
+    public Page<JournalEntryDTO> search(JournalEntryFilter journalEntryFilter, Pageable pageable) {
+        return journalEntryRepository.filter(journalEntryFilter, pageable)
+                .map(journalEntryMapper::toJournalEntryDTO);
     }
 
     public Optional<JournalEntryDTO> findById(Long id) {
@@ -59,5 +59,9 @@ public class JournalEntryService {
 
         publisher.publishEvent(new ResourceCreatedEvent(this, response, journalEntrySave.getId()));
         return journalEntryMapper.toJournalEntryDTO(journalEntrySave);
+    }
+
+    public void delete(Long id) {
+        journalEntryRepository.deleteById(id);
     }
 }
