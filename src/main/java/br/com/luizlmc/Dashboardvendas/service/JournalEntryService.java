@@ -1,6 +1,7 @@
 package br.com.luizlmc.Dashboardvendas.service;
 
 import br.com.luizlmc.Dashboardvendas.dto.JournalEntryDTO;
+import br.com.luizlmc.Dashboardvendas.dto.JournalEntrySummaryDTO;
 import br.com.luizlmc.Dashboardvendas.dto.mapper.JournalEntryMapper;
 import br.com.luizlmc.Dashboardvendas.event.ResourceCreatedEvent;
 import br.com.luizlmc.Dashboardvendas.model.JournalEntry;
@@ -39,6 +40,10 @@ public class JournalEntryService {
     public Page<JournalEntryDTO> search(JournalEntryFilter journalEntryFilter, Pageable pageable) {
         return journalEntryRepository.filter(journalEntryFilter, pageable)
                 .map(journalEntryMapper::toJournalEntryDTO);
+    }
+
+    public Page<JournalEntrySummaryDTO> summarize(JournalEntryFilter journalEntryFilter, Pageable pageable) {
+        return journalEntryRepository.summarize(journalEntryFilter, pageable);
     }
 
     public Optional<JournalEntryDTO> findById(Long id) {

@@ -1,6 +1,7 @@
 package br.com.luizlmc.Dashboardvendas.controller;
 
 import br.com.luizlmc.Dashboardvendas.dto.JournalEntryDTO;
+import br.com.luizlmc.Dashboardvendas.dto.JournalEntrySummaryDTO;
 import br.com.luizlmc.Dashboardvendas.repository.filter.JournalEntryFilter;
 import br.com.luizlmc.Dashboardvendas.service.JournalEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,12 @@ public class JournalEntryController {
     @PreAuthorize("hasAuthority('ROLE_SEARCH_JOURNALENTRY') and hasAuthority('SCOPE_read')")
     public ResponseEntity<Page<JournalEntryDTO>> search(JournalEntryFilter journalEntryFilter, Pageable pageable){
         return ResponseEntity.ok().body(journalEntryService.search(journalEntryFilter, pageable));
+    }
+
+    @GetMapping(params = "summary")
+    @PreAuthorize("hasAuthority('ROLE_SEARCH_JOURNALENTRY') and hasAuthority('SCOPE_read')")
+    public ResponseEntity<Page<JournalEntrySummaryDTO>> summarize(JournalEntryFilter journalEntryFilter, Pageable pageable){
+        return ResponseEntity.ok().body(journalEntryService.summarize(journalEntryFilter, pageable));
     }
 
     @GetMapping("/{id}")

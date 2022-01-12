@@ -1,7 +1,10 @@
 package br.com.luizlmc.Dashboardvendas.repository.journalEntry;
 
+import br.com.luizlmc.Dashboardvendas.dto.JournalEntrySummaryDTO;
+import br.com.luizlmc.Dashboardvendas.model.Category_;
 import br.com.luizlmc.Dashboardvendas.model.JournalEntry;
 import br.com.luizlmc.Dashboardvendas.model.JournalEntry_;
+import br.com.luizlmc.Dashboardvendas.model.Person_;
 import br.com.luizlmc.Dashboardvendas.repository.filter.JournalEntryFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -38,6 +41,29 @@ public class JournalEntryRepositoryImpl implements JournalEntryRepositoryQuery{
 
         return new PageImpl<>(query.getResultList(), pageable, total(journalEntryFilter));
     }
+
+    @Override
+    public Page<JournalEntrySummaryDTO> summarize(JournalEntryFilter journalEntryFilter, Pageable pageable) {
+        CriteriaBuilder builder = manager.getCriteriaBuilder();
+        CriteriaQuery<JournalEntrySummaryDTO> criteria = builder.createQuery(JournalEntrySummaryDTO.class);
+        Root<JournalEntry> root = criteria.from(JournalEntry.class);
+
+        criteria.select(builder.construct(JournalEntrySummaryDTO.class,
+                root.get(JournalEntry_.ID), root.get(JournalEntry_.DESCRIPTION),
+                root.get(JournalEntry_.DUE_DATE), root.get(JournalEntry_.PAYMENT_DATE),
+                root.get(JournalEntry_.AMOUNT), root.get(JournalEntry_.ENTRY_TYPE),
+                root.get(JournalEntry_.CATEGORY).get(Category_.NAME),
+                root.get(JournalEntry_.PERSON).get(Person_.NAME)));
+
+        Predicate[] predicates = createRestrictions(journalEntryFilter, builder, root);
+        criteria.where(predicates);
+
+        TypedQuery<JournalEntrySummaryDTO> query = manager.createQuery(criteria);
+        addPaginationRestrictions(query, pageable);
+
+        return new PageImpl<>(query.getResultList(), pageable, total(journalEntryFilter));
+    }
+
 
     private Predicate[] createRestrictions(JournalEntryFilter journalEntryFilter, CriteriaBuilder builder,
                                            Root<JournalEntry> root) {

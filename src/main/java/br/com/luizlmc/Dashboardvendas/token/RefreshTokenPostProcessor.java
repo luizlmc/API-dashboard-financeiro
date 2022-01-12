@@ -1,5 +1,7 @@
 package br.com.luizlmc.Dashboardvendas.token;
 
+import br.com.luizlmc.Dashboardvendas.config.property.DashboardVendasApiProperty;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -20,6 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 @ControllerAdvice
 public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2AccessToken> {
 
+    @Autowired
+    private DashboardVendasApiProperty dashboardVendasApiProperty;
+
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
         return returnType.getMethod().getName().equals("postAccessToken");
@@ -36,20 +41,20 @@ public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2Acces
         DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) body;
 
         String refreshToken = body.getRefreshToken().getValue();
-        adicionarRefreshTokenNoCookie(refreshToken, req, resp);
-        removerRefreshTokenDoBody(token);
+        addRefreshTokenOnCookie(refreshToken, req, resp);
+        removeRefreshTokenBody(token);
 
         return body;
     }
 
-    private void removerRefreshTokenDoBody(DefaultOAuth2AccessToken token) {
+    private void removeRefreshTokenBody(DefaultOAuth2AccessToken token) {
         token.setRefreshToken(null);
     }
 
-    private void adicionarRefreshTokenNoCookie(String refreshToken, HttpServletRequest req, HttpServletResponse resp) {
+    private void addRefreshTokenOnCookie(String refreshToken, HttpServletRequest req, HttpServletResponse resp) {
         Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
         refreshTokenCookie.setHttpOnly(true);
-        refreshTokenCookie.setSecure(false); // TODO: Mudar para true em producao
+        refreshTokenCookie.setSecure(dashboardVendasApiProperty.getSecurity().isEnableHttps());
         refreshTokenCookie.setPath(req.getContextPath() + "/oauth/token");
         refreshTokenCookie.setMaxAge(2592000);
         resp.addCookie(refreshTokenCookie);
