@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.luizlmc</groupId>
-	<artifactId>Dashboard-vendas</artifactId>
+	<artifactId>Dashboard-financeiro</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Dashboard-vendas</name>
-	<description>Dashboard de vendas em spring e mysql</description>
+	<name>Dashboard-financeiro</name>
+	<description>Dashboard de controle financeiro em spring e mysql</description>
 	<properties>
 		<java.version>11</java.version>
 		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
