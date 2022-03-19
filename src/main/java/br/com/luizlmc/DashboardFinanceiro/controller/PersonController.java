@@ -1,7 +1,7 @@
 package br.com.luizlmc.DashboardFinanceiro.controller;
 
 import br.com.luizlmc.DashboardFinanceiro.dto.PersonDTO;
-import br.com.luizlmc.DashboardFinanceiro.service.PersonService;
+import br.com.luizlmc.DashboardFinanceiro.service.serviceImpl.PersonServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import java.util.List;
 public class PersonController {
 
     @Autowired
-    private PersonService personService;
+    private PersonServiceImpl personService;
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_SEARCH_PERSON') and hasAuthority('SCOPE_read')")

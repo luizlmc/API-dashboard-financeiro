@@ -10,11 +10,11 @@ import javax.persistence.Embeddable;
 @Setter
 public class Address {
 
-    private String logradouro;
-    private String numero;
-    private String complemento;
-    private String bairro;
-    private String cep;
-    private String cidade;
-    private String estado;
+    private String street;
+    private String address_number;
+    private String complement;
+    private String neighbourhood;
+    private String zipcode;
+    private String city;
+    private String state;
 }

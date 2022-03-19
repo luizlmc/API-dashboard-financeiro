@@ -1,7 +1,7 @@
 package br.com.luizlmc.DashboardFinanceiro.controller;
 
 import br.com.luizlmc.DashboardFinanceiro.dto.CategoryDTO;
-import br.com.luizlmc.DashboardFinanceiro.service.CategoryService;
+import br.com.luizlmc.DashboardFinanceiro.service.serviceImpl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    private CategoryService categoryService;
+    private CategoryServiceImpl categoryService;
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_SEARCH_CATEGORY') and hasAuthority('SCOPE_read')")
