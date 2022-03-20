@@ -1,11 +1,11 @@
-package br.com.luizlmc.DashboardFinanceiro.service.serviceImpl;
+package br.com.luizlmc.DashboardFinanceiro.serviceImpl.serviceImpl;
 
 import br.com.luizlmc.DashboardFinanceiro.dto.PersonDTO;
 import br.com.luizlmc.DashboardFinanceiro.dto.mapper.PersonMapper;
 import br.com.luizlmc.DashboardFinanceiro.event.ResourceCreatedEvent;
 import br.com.luizlmc.DashboardFinanceiro.model.Person;
 import br.com.luizlmc.DashboardFinanceiro.repository.PersonRepository;
-import br.com.luizlmc.DashboardFinanceiro.service.PersonService;
+import br.com.luizlmc.DashboardFinanceiro.serviceImpl.PersonService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

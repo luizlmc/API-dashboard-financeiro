@@ -1,11 +1,11 @@
-package br.com.luizlmc.DashboardFinanceiro.service.serviceImpl;
+package br.com.luizlmc.DashboardFinanceiro.serviceImpl.serviceImpl;
 
 import br.com.luizlmc.DashboardFinanceiro.dto.CategoryDTO;
 import br.com.luizlmc.DashboardFinanceiro.dto.mapper.CategoryMapper;
 import br.com.luizlmc.DashboardFinanceiro.event.ResourceCreatedEvent;
 import br.com.luizlmc.DashboardFinanceiro.model.Category;
 import br.com.luizlmc.DashboardFinanceiro.repository.CategoryRepository;
-import br.com.luizlmc.DashboardFinanceiro.service.CategoryService;
+import br.com.luizlmc.DashboardFinanceiro.serviceImpl.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;

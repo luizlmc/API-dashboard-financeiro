@@ -1,4 +1,4 @@
-package br.com.luizlmc.DashboardFinanceiro.service.serviceImpl;
+package br.com.luizlmc.DashboardFinanceiro.serviceImpl.serviceImpl;
 
 import br.com.luizlmc.DashboardFinanceiro.dto.JournalEntryDTO;
 import br.com.luizlmc.DashboardFinanceiro.dto.JournalEntrySummaryDTO;
@@ -9,8 +9,8 @@ import br.com.luizlmc.DashboardFinanceiro.model.Person;
 import br.com.luizlmc.DashboardFinanceiro.repository.JournalEntryRepository;
 import br.com.luizlmc.DashboardFinanceiro.repository.PersonRepository;
 import br.com.luizlmc.DashboardFinanceiro.repository.filter.JournalEntryFilter;
-import br.com.luizlmc.DashboardFinanceiro.service.JournalEntryService;
-import br.com.luizlmc.DashboardFinanceiro.service.exception.NonexistentOrInactivePersonException;
+import br.com.luizlmc.DashboardFinanceiro.serviceImpl.JournalEntryService;
+import br.com.luizlmc.DashboardFinanceiro.serviceImpl.exception.NonexistentOrInactivePersonException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.EmptyResultDataAccessException;

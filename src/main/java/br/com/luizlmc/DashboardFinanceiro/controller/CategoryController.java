@@ -1,7 +1,7 @@
 package br.com.luizlmc.DashboardFinanceiro.controller;
 
 import br.com.luizlmc.DashboardFinanceiro.dto.CategoryDTO;
-import br.com.luizlmc.DashboardFinanceiro.service.serviceImpl.CategoryServiceImpl;
+import br.com.luizlmc.DashboardFinanceiro.serviceImpl.serviceImpl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

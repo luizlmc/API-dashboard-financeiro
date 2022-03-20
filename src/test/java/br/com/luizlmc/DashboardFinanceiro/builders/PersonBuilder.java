@@ -7,8 +7,6 @@ public class PersonBuilder {
 
     private Person person;
 
-    private PersonBuilder() {}
-
     public static PersonBuilder aPerson(){
         PersonBuilder builder = new PersonBuilder();
         builder.person = new Person();

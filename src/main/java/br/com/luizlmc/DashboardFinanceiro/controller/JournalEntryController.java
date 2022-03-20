@@ -3,7 +3,7 @@ package br.com.luizlmc.DashboardFinanceiro.controller;
 import br.com.luizlmc.DashboardFinanceiro.dto.JournalEntryDTO;
 import br.com.luizlmc.DashboardFinanceiro.dto.JournalEntrySummaryDTO;
 import br.com.luizlmc.DashboardFinanceiro.repository.filter.JournalEntryFilter;
-import br.com.luizlmc.DashboardFinanceiro.service.serviceImpl.JournalEntryServiceImpl;
+import br.com.luizlmc.DashboardFinanceiro.serviceImpl.serviceImpl.JournalEntryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

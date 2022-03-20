@@ -1,7 +1,7 @@
 package br.com.luizlmc.DashboardFinanceiro.controller;
 
 import br.com.luizlmc.DashboardFinanceiro.dto.PersonDTO;
-import br.com.luizlmc.DashboardFinanceiro.service.serviceImpl.PersonServiceImpl;
+import br.com.luizlmc.DashboardFinanceiro.serviceImpl.serviceImpl.PersonServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

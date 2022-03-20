@@ -3,7 +3,7 @@ package br.com.luizlmc.DashboardFinanceiro.exceptionHandle;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import br.com.luizlmc.DashboardFinanceiro.service.exception.NonexistentOrInactivePersonException;
+import br.com.luizlmc.DashboardFinanceiro.serviceImpl.exception.NonexistentOrInactivePersonException;
 import lombok.Getter;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
