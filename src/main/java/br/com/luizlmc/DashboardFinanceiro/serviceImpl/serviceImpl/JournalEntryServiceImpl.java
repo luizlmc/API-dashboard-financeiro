@@ -56,7 +56,7 @@ public class JournalEntryServiceImpl implements JournalEntryService {
                 .orElseThrow(() -> new EmptyResultDataAccessException(1));
 
         if (personSave == null || personSave.isInactive()){
-            throw new NonexistentOrInactivePersonException();
+            throw new NonexistentOrInactivePersonException("Pessoa inexistente ou inativa");
         }
 
         JournalEntry journalEntrySave = journalEntryRepository.save(journalEntryMapper.toJournalEntry(journalEntryDTO));

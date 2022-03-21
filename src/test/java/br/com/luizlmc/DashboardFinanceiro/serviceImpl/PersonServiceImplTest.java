@@ -39,17 +39,13 @@ public class PersonServiceImplTest {
     private PersonMapper personMapper;
 
     @Mock
-    private ApplicationEventPublisher publisher;
-
     private MockHttpServletResponse response;
+
+    @Mock
+    private ApplicationEventPublisher publisher;
 
     @InjectMocks
     private PersonServiceImpl personService;
-
-    @BeforeEach
-    public void setup(){
-        response = new MockHttpServletResponse();
-    }
 
     @Test
     @DisplayName("Deve listar todas as pessoas")
@@ -143,7 +139,7 @@ public class PersonServiceImplTest {
     }
 
     @Test
-    @DisplayName("Deve deetar uma pessoa")
+    @DisplayName("Deve deletar uma pessoa")
     public void mustDeletePerson(){
         doNothing().when(personRepository).deleteById(anyLong());
 

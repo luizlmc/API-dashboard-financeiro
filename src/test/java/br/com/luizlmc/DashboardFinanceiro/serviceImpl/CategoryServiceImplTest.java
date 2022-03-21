@@ -41,15 +41,11 @@ class CategoryServiceImplTest {
     @Mock
     private ApplicationEventPublisher publisher;
 
+    @Mock
     private MockHttpServletResponse response;
 
     @InjectMocks
     private CategoryServiceImpl categoryService;
-
-    @BeforeEach
-    public void setup(){
-        response = new MockHttpServletResponse();
-    }
 
     @Test
     @DisplayName("Deve listar todas as categorias")

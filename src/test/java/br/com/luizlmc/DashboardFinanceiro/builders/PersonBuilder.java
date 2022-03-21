@@ -21,6 +21,11 @@ public class PersonBuilder {
         return this;
     }
 
+    public PersonBuilder setActive(boolean active){
+        person.setActive(active);
+        return this;
+    }
+
     public Person now(){
         return person;
     }

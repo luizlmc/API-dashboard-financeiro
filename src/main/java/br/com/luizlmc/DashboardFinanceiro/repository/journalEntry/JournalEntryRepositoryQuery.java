@@ -9,6 +9,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface JournalEntryRepositoryQuery {
 
-    public Page<JournalEntry> filter(JournalEntryFilter journalEntryFilter, Pageable pageable);
-    public Page<JournalEntrySummaryDTO> summarize(JournalEntryFilter journalEntryFilter, Pageable pageable);
+    Page<JournalEntry> filter(JournalEntryFilter journalEntryFilter, Pageable pageable);
+    Page<JournalEntrySummaryDTO> summarize(JournalEntryFilter journalEntryFilter, Pageable pageable);
 }
